@@ -1,0 +1,15 @@
+apiVersion: workflows.dev/v1alpha1
+kind: Workflow
+spec:
+  tasks:
+    integration-tests:
+      steps:
+        - run: echo "Running tests..." && sleep 60 && exit 0
+    unit-tests:
+      steps:
+        - run: echo "Running tests..." && sleep 60 && exit 0
+
+    deploy:
+      requires: [integration-tests, unit-tests]
+      steps:
+      - run: echo "Deploying code..." && sleep 120 && exit 0
