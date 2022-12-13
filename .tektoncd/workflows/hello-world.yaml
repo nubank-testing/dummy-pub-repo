@@ -1,0 +1,14 @@
+apiVersion: workflows.dev/v1alpha1
+kind: Workflow
+spec:
+  tasksa:
+    greeting:
+      steps:
+      - uses: checkout
+      - run: echo "Hello world!"
+    integration-tests:
+      steps:
+        - run: echo "Running tests..." && sleep 30s && exit 1
+    unit-tests:
+      steps:
+        - run: echo "Running tests..." && sleep 15s && exit 1
