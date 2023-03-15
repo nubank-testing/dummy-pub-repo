@@ -1,0 +1,24 @@
+apiVersion: workflows.dev/v1alpha1
+kind: Workflow
+spec:
+  events:
+    - deployment
+  tasks:
+    unit-tests:
+      steps:
+        - run: echo "Running unit tests..." && sleep 10 && echo "All tests passed"
+
+    integration-tests:
+      steps:
+        - run: |
+            echo "Running integration tests..."
+            sleep 15
+            [ $(( $RANDOM % 3 )) == 0 ] && {
+            echo "All tests passed"; exit 0
+            }
+            echo "Tests failed"; exit 1
+
+    deploy:
+      requires: [unit-tests, integration-tests]
+      steps:
+        - run: echo "Deploying code..." && sleep 15 && echo "Deploy completed"
